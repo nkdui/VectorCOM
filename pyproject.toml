@@ -1,0 +1,24 @@
+[project]
+name = "vectorcom"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Nguyen Khac Duy", email = "nkduy@duck.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pywin32>=311",
+    "rich>=14.1.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.11,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.17.1",
+    "pylint>=3.3.8",
+    "ruff>=0.12.9",
+]
