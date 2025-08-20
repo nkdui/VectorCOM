@@ -1,6 +1,9 @@
+import rich
+import rich.repr
 from win32com.client.dynamic import CDispatch
 
 
+@rich.repr.auto
 class Version:
     @property
     def FullName(self) -> str:
@@ -26,8 +29,8 @@ class Version:
     def Patch(self) -> int:
         return self._com.Patch
 
-    def __init__(self, Version: CDispatch) -> None:
-        self._com = Version
+    def __init__(self, version: CDispatch) -> None:
+        self._com = version
 
     def __rich_repr__(self):
         yield "FullName", self.FullName
