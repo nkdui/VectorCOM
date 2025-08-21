@@ -10,6 +10,7 @@ from vectorcom.configuration import PLPath
 
 from .common import RefBool, waitEventFinished
 from .configuration import Configuration
+from .measurement import Measurement
 from .version import Version
 
 LOG = logging.getLogger("VectorCOM")
@@ -37,7 +38,7 @@ class Canoe:
             cls.OnQuitCbk()
             cls.OnQuitFinished.true
 
-    _COM: ClassVar[CDispatch]
+    _com: ClassVar[CDispatch]
 
     @property
     def Bus(self) -> NotImplementedType:
@@ -49,15 +50,15 @@ class Canoe:
 
     @property
     def ChannelMappingName(self) -> str:
-        return self._COM.ChannelMappingName
+        return self._com.ChannelMappingName
 
     @ChannelMappingName.setter
     def ChannelMappingName(self, value: str) -> None:
-        self._COM.ChannelMappingName = value
+        self._com.ChannelMappingName = value
 
     @property
     def Configuration(self) -> Configuration:
-        return Configuration(self._COM.Configuration)
+        return Configuration(self._com.Configuration)
 
     @property
     def Environment(self) -> NotImplementedType:
@@ -65,15 +66,15 @@ class Canoe:
 
     @property
     def FullName(self) -> str:
-        return self._COM.FullName
+        return self._com.FullName
 
     @property
-    def Measurement(self) -> NotImplementedType:
-        return NotImplemented
+    def Measurement(self) -> Measurement:
+        return Measurement(self._com.Measurement)
 
     @property
     def Name(self) -> str:
-        return self._COM.Name
+        return self._com.Name
 
     @property
     def Networks(self) -> NotImplementedType:
@@ -81,7 +82,7 @@ class Canoe:
 
     @property
     def Path(self) -> PLPath:
-        return PLPath(self._COM.Path)
+        return PLPath(self._com.Path)
 
     @property
     def Performance(self) -> NotImplementedType:
@@ -101,15 +102,15 @@ class Canoe:
 
     @property
     def Visible(self) -> bool:
-        return self._COM.Visible
+        return self._com.Visible
 
     @Visible.setter
     def Visible(self, value: bool) -> None:
-        self._COM.Visible = value
+        self._com.Visible = value
 
     @property
     def Version(self) -> Version:
-        return Version(self._COM.Version)
+        return Version(self._com.Version)
 
     @classmethod
     def Open(
@@ -120,17 +121,17 @@ class Canoe:
     ) -> None:
         cls._Events.OnOpenFinished.false
         if autoSave and promptUser:
-            cls._COM.Open(path, autoSave, promptUser)
+            cls._com.Open(path, autoSave, promptUser)
         elif autoSave:
-            cls._COM.Open(path, autoSave)
+            cls._com.Open(path, autoSave)
         else:
-            cls._COM.Open(path)
+            cls._com.Open(path)
         waitEventFinished(cls._Events.OnOpenFinished)
 
     @classmethod
     def Quit(cls) -> None:
         cls._Events.OnQuitFinished.false
-        cls._COM.Quit()
+        cls._com.Quit()
         waitEventFinished(cls._Events.OnQuitFinished)
 
     @property
@@ -150,7 +151,7 @@ class Canoe:
         self._Events.OnQuitCbk = callback
 
     def __init__(self) -> None:
-        self.__class__._COM = win32com.client.DispatchWithEvents(
+        self.__class__._com = win32com.client.DispatchWithEvents(
             "CANoe.Application", self._Events
         )
 
@@ -161,7 +162,7 @@ class Canoe:
         yield self.Configuration
         yield "Environment", self.Environment
         yield "FullName", self.FullName
-        yield "Measurement", self.Measurement
+        yield self.Measurement
         yield "Name", self.Name
         yield "Networks", self.Networks
         yield "Path", self.Path

@@ -53,15 +53,15 @@ class Configuration:
             cls.OnSysVarDefChangedCbk()
             cls.OnSysVarDefChangedFinished.true
 
-    _COM: ClassVar[CDispatch]
+    _com: ClassVar[CDispatch]
 
     @property
     def AsynchronousCheckEvaluationEnabled(self) -> bool:
-        return self._COM.AsynchronousCheckEvaluationEnabled
+        return self._com.AsynchronousCheckEvaluationEnabled
 
     @AsynchronousCheckEvaluationEnabled.setter
     def AsynchronousCheckEvaluationEnabled(self, value: bool) -> None:
-        self._COM.AsynchronousCheckEvaluationEnabled = value
+        self._com.AsynchronousCheckEvaluationEnabled = value
 
     @property
     def CANoe4Server(self) -> NotImplementedType:
@@ -73,11 +73,11 @@ class Configuration:
 
     @property
     def Comment(self) -> str:
-        return self._COM.Comment
+        return self._com.Comment
 
     @Comment.setter
     def Comment(self, value: str) -> None:
-        self._COM.Comment = value
+        self._com.Comment = value
 
     @property
     def CommunicationSetup(self) -> NotImplementedType:
@@ -93,19 +93,19 @@ class Configuration:
 
     @property
     def ExecutionEnvironment(self) -> CfgExeVariant:
-        return CfgExeVariant(self._COM.ExecutionEnvironment)
+        return CfgExeVariant(self._com.ExecutionEnvironment)
 
     @ExecutionEnvironment.setter
     def ExecutionEnvironment(self, new_env: CfgExeVariant) -> None:
-        self._COM.ExecutionEnvironment = new_env.value
+        self._com.ExecutionEnvironment = new_env.value
 
     @property
     def FDXEnabled(self) -> bool:
-        return self._COM.FDXEnabled
+        return self._com.FDXEnabled
 
     @FDXEnabled.setter
     def FDXEnabled(self, value: bool) -> None:
-        self._COM.FDXEnabled = value
+        self._com.FDXEnabled = value
 
     @property
     def FDXFiles(self) -> NotImplementedType:
@@ -113,23 +113,23 @@ class Configuration:
 
     @property
     def FDXPort(self) -> int:
-        return self._COM.FDXPort
+        return self._com.FDXPort
 
     @FDXPort.setter
     def FDXPort(self, value: int) -> None:
-        self._COM.FDXPort = value
+        self._com.FDXPort = value
 
     @property
     def FDXTransportLayer(self) -> CfgFDXTL:
-        return CfgFDXTL(self._COM.FDXTransportLayer)
+        return CfgFDXTL(self._com.FDXTransportLayer)
 
     @FDXTransportLayer.setter
     def FDXTransportLayer(self, new_value: CfgFDXTL) -> None:
-        self._COM.FDXTransportLayer = new_value.value
+        self._com.FDXTransportLayer = new_value.value
 
     @property
     def FullName(self) -> str:
-        return self._COM.FullName
+        return self._com.FullName
 
     @property
     def GeneralSetup(self) -> NotImplementedType:
@@ -145,11 +145,11 @@ class Configuration:
 
     @property
     def HwConfigurationSelection(self) -> int:
-        return self._COM.HwConfigurationSelection
+        return self._com.HwConfigurationSelection
 
     @HwConfigurationSelection.setter
     def HwConfigurationSelection(self, value: int) -> None:
-        self._COM.HwConfigurationSelection = value
+        self._com.HwConfigurationSelection = value
 
     @property
     def IOHardware(self) -> NotImplementedType:
@@ -157,15 +157,15 @@ class Configuration:
 
     @property
     def Mode(self) -> CfgMode:
-        return CfgMode(self._COM.mode)
+        return CfgMode(self._com.mode)
 
     @Mode.setter
     def Mode(self, new_mode: CfgMode) -> None:
-        self._COM.Mode = new_mode.value
+        self._com.Mode = new_mode.value
 
     @property
     def Modified(self) -> bool:
-        return self._COM.Modified
+        return self._com.Modified
 
     @property
     def MultiCANoe(self) -> NotImplementedType:
@@ -173,11 +173,11 @@ class Configuration:
 
     @property
     def Name(self) -> str:
-        return self._COM.Name
+        return self._com.Name
 
     @property
     def NETTargetFramework(self) -> int:
-        return self._COM.NETTargetFramework
+        return self._com.NETTargetFramework
 
     @property
     def OfflineSetup(self) -> NotImplementedType:
@@ -193,15 +193,15 @@ class Configuration:
 
     @property
     def Path(self) -> PLPath:
-        return PLPath(self._COM.Path)
+        return PLPath(self._com.Path)
 
     @property
     def ReadOnly(self) -> bool:
-        return self._COM.ReadOnly
+        return self._com.ReadOnly
 
     @property
     def Saved(self) -> bool:
-        return self._COM.Saved
+        return self._com.Saved
 
     @property
     def Sensor(self) -> NotImplementedType:
@@ -209,11 +209,11 @@ class Configuration:
 
     @property
     def ServiceGeneratorActive(self) -> bool:
-        return self._COM.ServiceGeneratorActive
+        return self._com.ServiceGeneratorActive
 
     @ServiceGeneratorActive.setter
     def ServiceGeneratorActive(self, value: bool) -> None:
-        self._COM.ServiceGeneratorActive = value
+        self._com.ServiceGeneratorActive = value
 
     @property
     def SimulationSetup(self) -> NotImplementedType:
@@ -221,11 +221,11 @@ class Configuration:
 
     @property
     def SplitOverlappingFlexRayNMFrames(self) -> bool:
-        return self._COM.SplitOverlappingFlexRayNMFrames
+        return self._com.SplitOverlappingFlexRayNMFrames
 
     @SplitOverlappingFlexRayNMFrames.setter
     def SplitOverlappingFlexRayNMFrames(self, value: bool) -> None:
-        self._COM.SplitOverlappingFlexRayNMFrames = value
+        self._com.SplitOverlappingFlexRayNMFrames = value
 
     @property
     def StandaloneMode(self) -> NotImplementedType:
@@ -241,7 +241,7 @@ class Configuration:
 
     @property
     def TestConfigurations(self) -> TestConfigurations:
-        return TestConfigurations(self._COM.TestConfigurations)
+        return TestConfigurations(self._com.TestConfigurations)
 
     @property
     def TestSetup(self) -> NotImplementedType:
@@ -253,11 +253,11 @@ class Configuration:
 
     @property
     def UseShortLabel(self) -> bool:
-        return self._COM.UseShortLabel
+        return self._com.UseShortLabel
 
     @UseShortLabel.setter
     def UseShortLabel(self, value: bool) -> None:
-        self._COM.UseShortLabel = value
+        self._com.UseShortLabel = value
 
     @property
     def VTSystem(self) -> NotImplementedType:
@@ -265,19 +265,19 @@ class Configuration:
 
     @property
     def XILAPIEnabled(self) -> bool:
-        return self._COM.XILAPIEnabled
+        return self._com.XILAPIEnabled
 
     @property
     def XILAPIPort(self) -> int:
-        return self._COM.XILAPIPort
+        return self._com.XILAPIPort
 
     @XILAPIPort.setter
     def XILAPIPort(self, value: int) -> None:
-        self._COM.XILAPIPort = value
+        self._com.XILAPIPort = value
 
     @classmethod
     def CompileAndVerify(cls):
-        cls._COM.CompileAndVerify()
+        cls._com.CompileAndVerify()
 
     @property
     def OnClose(self) -> Callable[[], None]:
@@ -296,8 +296,8 @@ class Configuration:
         self._Events.OnSysVarDefChangedCbk = callback
 
     def __init__(self, configuration: CDispatch) -> None:
-        self.__class__._COM = configuration
-        WithEvents(configuration, self._Events)
+        self.__class__._com = configuration
+        self._events = WithEvents(configuration, self._Events)
 
     def __rich_repr__(self):
         yield (

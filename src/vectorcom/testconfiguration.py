@@ -1,6 +1,6 @@
-from types import NotImplementedType
-from typing import Callable, ClassVar
 import logging
+from types import NotImplementedType
+from typing import Callable, ClassVar, Optional
 
 import rich.repr
 from win32com.client import CDispatch, WithEvents
@@ -47,21 +47,21 @@ class TestConfiguration:
     _com: CDispatch
 
     @property
-    def Caption(self) -> str:
+    def Caption(self) -> Optional[str]:
         try:
             return self._com.Caption
         except AttributeError as attr_e:
             if attr_e.name == "Caption":
-                return NotImplemented
+                return None
             raise
 
     @property
-    def Elements(self) -> TestTreeElements:
+    def Elements(self) -> Optional[TestTreeElements]:
         try:
             return TestTreeElements(self._com.Elements)
         except AttributeError as attr_e:
             if attr_e.name == "Elements":
-                return NotImplemented
+                return None
             raise
 
     @property
@@ -69,7 +69,7 @@ class TestConfiguration:
         return self._com.Enabled
 
     @property
-    def Id(self) -> str | None:
+    def Id(self) -> Optional[str]:
         try:
             return self._com.Id
         except AttributeError as attr_e:
@@ -82,12 +82,12 @@ class TestConfiguration:
         return self._com.Name
 
     @property
-    def PortCreation(self) -> int:
+    def PortCreation(self) -> Optional[int]:
         try:
             return self._com.PortCreation
         except AttributeError as attr_e:
             if attr_e.name == "PortCreation":
-                return NotImplemented
+                return None
             raise
 
     @property
@@ -111,12 +111,12 @@ class TestConfiguration:
         return TestUnits(self._com.TestUnits)
 
     @property
-    def Type(self) -> TestElementType:
+    def Type(self) -> Optional[TestElementType]:
         try:
             return TestElementType(self._com.Type)
         except AttributeError as attr_e:
             if attr_e.name == "Type":
-                return NotImplemented
+                return None
             raise
 
     @property

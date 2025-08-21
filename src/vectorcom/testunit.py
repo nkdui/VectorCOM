@@ -1,4 +1,5 @@
 from types import NotImplementedType
+from typing import Optional
 
 import rich.repr
 from win32com.client import CDispatch
@@ -12,21 +13,21 @@ class TestUnit:
     _com: CDispatch
 
     @property
-    def Caption(self) -> str:
+    def Caption(self) -> Optional[str]:
         try:
             return self._com.Caption
         except AttributeError as attr_e:
             if attr_e.name == "Caption":
-                return NotImplemented
+                return None
             raise
 
     @property
-    def Elements(self) -> TestTreeElements:
+    def Elements(self) -> Optional[TestTreeElements]:
         try:
             return TestTreeElements(self._com.Elements)
         except AttributeError as attr_e:
             if attr_e.name == "Elements":
-                return NotImplemented
+                return None
             raise
 
     @property
@@ -38,12 +39,12 @@ class TestUnit:
         self._com.Enabled = value
 
     @property
-    def Id(self) -> str:
+    def Id(self) -> Optional[str]:
         try:
             return self._com.Id
         except AttributeError as attr_e:
             if attr_e.name == "Id":
-                return NotImplemented
+                return None
             raise
 
     @property
@@ -55,12 +56,12 @@ class TestUnit:
         return NotImplemented
 
     @property
-    def Type(self) -> TestElementType:
+    def Type(self) -> Optional[TestElementType]:
         try:
             return TestElementType(self._com.Type)
         except AttributeError as attr_e:
             if attr_e.name == "Type":
-                return NotImplemented
+                return None
             raise
 
     @property
