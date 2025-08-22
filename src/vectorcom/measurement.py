@@ -91,6 +91,8 @@ class Measurement:
 
     @classmethod
     def Start(cls):
+        if cls.Running:
+            return
         cls.events.OnStartFinished.false
         cls._com.Start()
         waitEventFinished(cls.events.OnStartFinished)
@@ -101,6 +103,8 @@ class Measurement:
 
     @classmethod
     def StopEx(cls):
+        if not cls.Running:
+            return
         cls.events.OnStopFinished.false
         cls._com.StopEx()
         waitEventFinished(cls.events.OnStopFinished)

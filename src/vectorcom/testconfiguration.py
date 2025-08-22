@@ -24,25 +24,21 @@ class TestConfiguration:
         OnVerdictChangedFinished: RefBool = RefBool(True)
         OnVerdictFailFinished: RefBool = RefBool(True)
 
-        @classmethod
-        def OnStart(cls):
-            cls.OnStartCbk()
-            cls.OnStartFinished.true
+        def OnStart(self):
+            self.OnStartCbk()
+            self.OnStartFinished.true
 
-        @classmethod
-        def OnStop(cls, reason: StopReason):
-            cls.OnStopCbk(reason)
-            cls.OnStopFinished.true
+        def OnStop(self, reason: StopReason):
+            self.OnStopCbk(reason)
+            self.OnStopFinished.true
 
-        @classmethod
-        def OnVerdictChanged(cls, verdict: Verdict):
-            cls.OnVerdictChangedCbk(verdict)
-            cls.OnVerdictChangedFinished.true
+        def OnVerdictChanged(self, verdict: Verdict):
+            self.OnVerdictChangedCbk(verdict)
+            self.OnVerdictChangedFinished.true
 
-        @classmethod
-        def OnVerdictFail(cls):
-            cls.OnVerdictFailCbk()
-            cls.OnVerdictFailFinished.true
+        def OnVerdictFail(self):
+            self.OnVerdictFailCbk()
+            self.OnVerdictFailFinished.true
 
     _com: CDispatch
 
@@ -96,7 +92,12 @@ class TestConfiguration:
 
     @property
     def Running(self) -> bool:
-        return NotImplemented
+        try:
+            return self._com.Running
+        except AttributeError as attr_e:
+            if attr_e.name == "Running":
+                return None
+            raise
 
     @property
     def Settings(self) -> NotImplementedType:
@@ -124,28 +125,32 @@ class TestConfiguration:
         return Verdict(self._com.Verdict)
 
     def Start(self):
-        self._events.OnStartFinished.false
+        if self.Running:
+            return
+        self.events.OnStartFinished.false
         self._com.Start()
-        waitEventFinished(self._events.OnStartFinished)
+        waitEventFinished(self.events.OnStartFinished)
 
     def Stop(self):
-        self._events.OnStopFinished.false
+        if not self.Running:
+            return
+        self.events.OnStopFinished.false
         self._com.Stop()
-        waitEventFinished(self._events.OnStopFinished)
+        waitEventFinished(self.events.OnStopFinished)
 
     def __init__(self, testcfg: CDispatch) -> None:
         self._com = testcfg
-        self._events = WithEvents(testcfg, self._Events)
-        self._events.OnStartCbk = lambda: LOG.debug(
+        self.events = WithEvents(testcfg, self._Events)
+        self.events.OnStartCbk = lambda: LOG.debug(
             "Test Configuration %s started", self.Name
         )
-        self._events.OnStopCbk = lambda reason: LOG.debug(
+        self.events.OnStopCbk = lambda reason: LOG.debug(
             "Test Configuration %s stopped with reason %s", self.Name, reason
         )
-        self._events.OnVerdictChangedCbk = lambda verdict: LOG.debug(
+        self.events.OnVerdictChangedCbk = lambda verdict: LOG.debug(
             "Test Configuration %s verdict changed to %s", self.Name, verdict
         )
-        self._events.OnVerdictFailCbk = lambda: LOG.debug(
+        self.events.OnVerdictFailCbk = lambda: LOG.debug(
             "Test Configuration %s failed", self.Name
         )
 
